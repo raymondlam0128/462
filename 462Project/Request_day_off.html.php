@@ -15,20 +15,21 @@
     $db = new mysqli('localhost', 'root', '', '462_schedule_project');
 
 
-    $query = "INSERT INTO prerequest (MFName,MLName,EFName,ELName,StartDate,EndDate) VALUES (?,?,?,?,?,?)";
+    $query = "INSERT INTO prerequest (MFName,MLName,EFName,ELName,StartDate,EndDate, Status) VALUES (?,?,?,?,?,?,?)";
     $stmt = $db->prepare($query);
 
-    if(mysqli_connect_erro()){
-      echo "Error: could not connect to database.";
-    }
-    $stmt->bind_param('ssssss',
+  //  if(mysqli_connect_erro()){
+    //  echo "Error: could not connect to database.";
+  //  }
+    $stmt->bind_param('sssssss',
 
     $manager_first_name,
     $manager_last_name ,
     $employee_first_name,
     $employee_last_name ,
     $startDate ,
-    $endDate );
+    $endDate,
+    $Status = "Pending");
     $stmt->execute();
     header('Location:http://localhost/462Project/employee_homepage.html.php');
   }
