@@ -27,41 +27,62 @@
         <th>Action</th>
       </tr>
     <?php
-    $conn = mysqli_connect("localhost", "root", "", "462_schedule_project");
+
+    $mfname = $_SESSION['fname'];
+    $mlname = $_SESSION['lname'];
+    $conn = new mysqli("localhost", "root", "", "462_schedule_project");
     if (!$conn) {
       die("Connection failed: " . mysqli_connect_error());
     }
+    $buttonName1 = "Accept";
+    $buttonname2 = "Decline";
 
-    $sql = "SELECT ID, MFName, MLName,EFName, ELName, StartDate, EndDate, Status FROM prerequest
-    WHERE MFName = '".$_SESSION['fname']."' AND MLName = '".$_SESSION['lname']."' AND Status = 'Pending'";
+    $sql = "SELECT (ID,
+                   EFName,
+                   ELName,
+                   StartDate,
+                   EndDate,
+                   Status)
 
-    $result = mysqli_query($conn, $sql);
+    FROM prerequest
+    WHERE MFName = '$mfname' AND MLName = '$mlname' ";
 
-    if (mysqli_num_rows($result) > 0) {
-    // output data of each row
-      while($row = mysqli_fetch_assoc($result)) {
-    ?>
-        <tr>
-          <td><?php echo  $row["ID"] ?> </td>
-          <td> <?php echo  $row["EFName"] ?> </td>
-          <td> <?php echo  $row["ELName"] ?> </td>
-          <td> <?php echo  $row["StartDate"] ?> </td>
-          <td> <?php echo  $row["EndDate"] ?> </td>
-          <td><a href='approve.php?Service_ID="'.$row["ID"].'"'>Approve</a>
-              <a href='decline.php?Service_ID="'.$row["ID"].'"'>Decline</a></td>
-        </tr>
-        <br>
-        <?php
-        }
-      } else {
-      ?>
-        <tr>
-          <td colspan="5 "> <center> <b><h3><?php echo "There is no requests" ?></h3></b> </center></td>
-        </tr>
-      <?php
+
+
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $stmt->store_result();
+    $stmt->bind_result($ID, $EFName, $ELName, $StartDate, $EndDate, $Status);
+
+
+    while($stmt->fetch()){
+        echo "<tr>\n";
+        echo "<td >".$ID."</td>";
+        echo "<td >".$EFName."</td>";
+        echo "<td >".$ELName."</td>";
+        echo "<td >".$StartDate."</td>";
+        echo "<td >".$EndDate."</td>";
+        echo "<td >".$Status."</td>";
+        echo "<form action='' method = 'post'>";
+        echo "<td><button type='submit' name ='update_submit' >$buttonName1</button>";
+        echo "<button type='submit' name ='update2_submit' >$buttonName2</button></td>";
+        echo "</form>";
+        echo "</tr>\n";
       }
 
+      if(isset($_POST['update_submit'])){
+        $query = "UPDATE prerequest SET prerequest.Status = 'Accpect' where prerequest.ID='$s'";
+        $stmt = $link->prepare($query);
+        $stmt->execute();
+      }
+      else if(isset($_POST['update2_submit'])){
+        $query = "UPDATE prerequest SET prerequest.Status = 'Decline' where prerequest.ID='$s'";
+        $stmt = $link->prepare($query);
+        $stmt->execute();
+       }
+
+
     ?>
-    <a href="http://localhost/462Project/index.html.php">Logout</a>
+
   </body>
 </html>

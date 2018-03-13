@@ -1,9 +1,5 @@
 <!DOCTYPE html>
-<?php session_start();
-
-if(isset)
-
-?>
+<?php session_start();?>
 
 <html>
   <head>
