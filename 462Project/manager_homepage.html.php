@@ -37,12 +37,12 @@
     $buttonName1 = "Accept";
     $buttonname2 = "Decline";
 
-    $sql = "SELECT (ID,
-                   EFName,
-                   ELName,
-                   StartDate,
-                   EndDate,
-                   Status)
+    $sql = "SELECT prerequest.ID,
+                   prerequest.EFName,
+                   prerequest.ELName,
+                   prerequest.StartDate,
+                   prerequest.EndDate,
+                   prerequest.Status
 
     FROM prerequest
     WHERE MFName = '$mfname' AND MLName = '$mlname' ";
@@ -65,19 +65,19 @@
         echo "<td >".$Status."</td>";
         echo "<form action='' method = 'post'>";
         echo "<td><button type='submit' name ='update_submit' >$buttonName1</button>";
-        echo "<button type='submit' name ='update2_submit' >$buttonName2</button></td>";
+        echo "<button type='submit' name ='update2_submit' >$buttonname2</button></td>";
         echo "</form>";
         echo "</tr>\n";
       }
 
       if(isset($_POST['update_submit'])){
-        $query = "UPDATE prerequest SET prerequest.Status = 'Accpect' where prerequest.ID='$s'";
-        $stmt = $link->prepare($query);
+        $query = "UPDATE prerequest SET prerequest.Status = 'Accpect' where prerequest.ID='$ID'";
+        $stmt = $conn->prepare($query);
         $stmt->execute();
       }
       else if(isset($_POST['update2_submit'])){
-        $query = "UPDATE prerequest SET prerequest.Status = 'Decline' where prerequest.ID='$s'";
-        $stmt = $link->prepare($query);
+        $query = "UPDATE prerequest SET prerequest.Status = 'Decline' where prerequest.ID='$ID'";
+        $stmt = $conn->prepare($query);
         $stmt->execute();
        }
 
