@@ -20,14 +20,14 @@
 
     <table style = "width:50%"  >
       <tr>
-        <th>ID</th>
+        <th>Shift_ID</th>
         <th>First Name</th>
         <th>Last Name</th>
         <th>Start date off</th>
         <th>End date off</th>
         <th>Reason</th>
         <th>Status </th>
-        <th>Action</th>
+        <th  colspan="2">Action</th>
       </tr>
     <?php
 
@@ -41,6 +41,7 @@
     $buttonName2 = "Decline";
 
     $sql = "SELECT prerequest.ID,
+                   prerequest.Shift_ID,
                    prerequest.EFName,
                    prerequest.ELName,
                    prerequest.StartDate,
@@ -56,22 +57,22 @@
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     $stmt->store_result();
-    $stmt->bind_result($ID, $EFName, $ELName, $StartDate, $EndDate, $Reason, $Status);
+    $stmt->bind_result($ID, $shift_ID, $EFName, $ELName, $StartDate, $EndDate, $Reason, $Status);
 
     if($stmt->num_rows > 0){
     while($stmt->fetch()){
-        echo "<tr>\n";
-        echo "<td >".$ID."</td>";
+        echo "<tr>";
+        echo "<td >".$shift_ID."</td>";
         echo "<td >".$EFName."</td>";
         echo "<td >".$ELName."</td>";
         echo "<td >".$StartDate."</td>";
         echo "<td >".$EndDate."</td>";
         echo "<td >".$Reason."</td>";
         echo "<td >".$Status."</td>";
-        echo "<td><a href='Approve.php?id=".$ID."'>$buttonName1</a>";
-        echo "<a href='Decline.php?id=".$ID."'>$buttonName2</a></td>";
+        echo "<td><a href='Approve.php?id=".$ID."'>$buttonName1</a></td>";
+        echo "<td><a href='Decline.php?id=".$ID."'>$buttonName2</a></td>";
 
-        echo "</tr>\n";
+        echo "</tr>";
       }
     }
     else{

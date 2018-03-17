@@ -2,9 +2,11 @@
 <?php session_start();
 $fname =  $_SESSION['fname'];
 $lname =  $_SESSION['lname'];
+$username =   $_SESSION['cur_user'];
+
 
 if(isset($_POST['request_submit'])){
-
+  $shift_ID = $_POST['Shift_ID'];
   $manager_first_name = $_POST['manager_first_name'];
   $manager_last_name = $_POST['manager_last_name'];
   $startDate = $_POST['Start_date'];
@@ -14,14 +16,16 @@ if(isset($_POST['request_submit'])){
   $db = new mysqli('localhost', 'root', '', '462_schedule_project');
 
 
-  $query = "INSERT INTO prerequest (MFName,MLName,EFName,ELName,StartDate,EndDate, Reason, Status) VALUES (?,?,?,?,?,?,?,?)";
+  $query = "INSERT INTO prerequest (Shift_ID, userName, MFName,MLName,EFName,ELName,StartDate,EndDate, Reason, Status)
+  VALUES (?,?,?,?,?,?,?,?,?,?)";
   $stmt = $db->prepare($query);
 
 //  if(mysqli_connect_erro()){
   //  echo "Error: could not connect to database.";
 //  }
-  $stmt->bind_param('ssssssss',
-
+  $stmt->bind_param('dsssssssss',
+  $shift_ID,
+  $username,
   $manager_first_name,
   $manager_last_name ,
   $fname,
@@ -51,6 +55,7 @@ if(isset($_POST['request_submit'])){
 
     <table style = "width:50%" >
       <tr>
+        <th>Shift ID</th>
         <th>First Name</th>
         <th>Last Name</th>
         <th>Start date off</th>
@@ -64,7 +69,7 @@ if(isset($_POST['request_submit'])){
       die("Connection failed: " . mysqli_connect_error());
     }
 
-    $sql = "SELECT EFName, ELName, StartDate, EndDate, Reason, Status FROM prerequest
+    $sql = "SELECT Shift_ID, EFName, ELName, StartDate, EndDate, Reason, Status FROM prerequest
     WHERE EFName = '".$fname."' AND ELName = '".$lname."'";
 
     $result = mysqli_query($conn, $sql);
@@ -74,6 +79,7 @@ if(isset($_POST['request_submit'])){
       while($row = mysqli_fetch_assoc($result)) {
     ?>
         <tr>
+          <td> <?php echo  $row["Shift_ID"] ?> </td>
           <td> <?php echo  $row["EFName"] ?> </td>
           <td> <?php echo  $row["ELName"] ?> </td>
           <td> <?php echo  $row["StartDate"] ?> </td>
@@ -87,7 +93,7 @@ if(isset($_POST['request_submit'])){
       } else {
       ?>
       <tr>
-        <td colspan="6"><center> <?php echo "There is no request!!!" ?> </center></td>
+        <td colspan="7"><center> <?php echo "There is no request!!!" ?> </center></td>
       <tr>
         <?php
       }
@@ -102,6 +108,10 @@ if(isset($_POST['request_submit'])){
       <form class="modal-content animate" action="" method = "post">
         <div class="container">
           <table style = "width:80%" border="0">
+            <tr>
+              <td><label for="Shift_ID"><b>Shift_ID  </b></label></td>
+              <td><input type="text" placeholder="Enter the shift ID" name="Shift_ID" required></td>
+            </tr>
           <tr>
             <td><label for = "mangerfirstname"> <b>Manager first name </b> </label></td>
             <td><input type = "text" placeholder = "Enter manager first name" name = "manager_first_name" required></td>

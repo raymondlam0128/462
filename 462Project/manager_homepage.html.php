@@ -28,6 +28,7 @@ $lname =  $_SESSION['lname'];
 
       <table style = "width:50%" >
         <tr>
+          <th>Shift_ID</th>
           <th>First Name</th>
           <th>Last Name</th>
           <th>Start date off</th>
@@ -41,7 +42,7 @@ $lname =  $_SESSION['lname'];
         die("Connection failed: " . mysqli_connect_error());
       }
 
-      $sql = "SELECT EFName, ELName, StartDate, EndDate, Reason, Status FROM prerequest
+      $sql = "SELECT Shift_ID, EFName, ELName, StartDate, EndDate, Reason, Status FROM prerequest
       WHERE EFName = ('".$fname."' AND ELName = '".$lname."') AND (Status = 'Approve' OR Status = 'Decline')";
 
       $result = mysqli_query($conn, $sql);
@@ -51,6 +52,7 @@ $lname =  $_SESSION['lname'];
         while($row = mysqli_fetch_assoc($result)) {
       ?>
           <tr>
+            <td> <?php echo  $row["Shift_ID"] ?> </td>
             <td> <?php echo  $row["EFName"] ?> </td>
             <td> <?php echo  $row["ELName"] ?> </td>
             <td> <?php echo  $row["StartDate"] ?> </td>
@@ -64,7 +66,7 @@ $lname =  $_SESSION['lname'];
         } else {
         ?>
         <tr>
-          <td colspan="6"><center> <?php echo "There is no request!!!" ?> </center></td>
+          <td colspan="7"><center> <?php echo "There is no request!!!" ?> </center></td>
         <tr>
           <?php
         }
