@@ -12,7 +12,7 @@
     if (mysqli_query($conn, $sql)) {
       mysqli_close($conn);
 
-      header('Location:http://localhost/462Project/manager_homepage.html.php');
+      header('Location:http://localhost/462Project/manager_approval.html.php');
       exit;
     } else {
       echo "Error deleting record";
