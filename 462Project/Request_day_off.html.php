@@ -67,6 +67,11 @@ button {
 button:hover {
     opacity: 0.8;
 }
+.cancelbtn {
+    width: auto;
+    padding: 10px 18px;
+    background-color: #f44336;
+}
 
 /* Center the image and position the close button */
 .imgcontainer {

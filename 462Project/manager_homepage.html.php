@@ -24,6 +24,7 @@
         <th>Last Name</th>
         <th>Start date off</th>
         <th>End date off</th>
+        <th>Status </th>
         <th>Action</th>
       </tr>
     <?php
@@ -35,7 +36,7 @@
       die("Connection failed: " . mysqli_connect_error());
     }
     $buttonName1 = "Accept";
-    $buttonname2 = "Decline";
+    $buttonName2 = "Decline";
 
     $sql = "SELECT prerequest.ID,
                    prerequest.EFName,
@@ -45,7 +46,7 @@
                    prerequest.Status
 
     FROM prerequest
-    WHERE MFName = '$mfname' AND MLName = '$mlname' ";
+    WHERE MFName = '$mfname' AND MLName = '$mlname' AND Status = 'Pending' ";
 
 
 
@@ -54,7 +55,7 @@
     $stmt->store_result();
     $stmt->bind_result($ID, $EFName, $ELName, $StartDate, $EndDate, $Status);
 
-
+    if($stmt->num_rows > 0){
     while($stmt->fetch()){
         echo "<tr>\n";
         echo "<td >".$ID."</td>";
@@ -63,26 +64,17 @@
         echo "<td >".$StartDate."</td>";
         echo "<td >".$EndDate."</td>";
         echo "<td >".$Status."</td>";
-        echo "<form action='' method = 'post'>";
-        echo "<td><button type='submit' name ='update_submit' >$buttonName1</button>";
-        echo "<button type='submit' name ='update2_submit' >$buttonname2</button></td>";
-        echo "</form>";
+        echo "<td><a href='Approve.php?id=".$ID."'>$buttonName1</a>";
+        echo "<a href='Decline.php?id=".$ID."'>$buttonName2</a></td>";
+
         echo "</tr>\n";
       }
-
-      if(isset($_POST['update_submit'])){
-        $query = "UPDATE prerequest SET prerequest.Status = 'Accpect' where prerequest.ID='$ID'";
-        $stmt = $conn->prepare($query);
-        $stmt->execute();
-      }
-      else if(isset($_POST['update2_submit'])){
-        $query = "UPDATE prerequest SET prerequest.Status = 'Decline' where prerequest.ID='$ID'";
-        $stmt = $conn->prepare($query);
-        $stmt->execute();
-       }
-
-
+    }
+    else{
+      echo "<td colspan = 7><center><h2> There is no request!!!!</h2></center> </td>";
+    }
     ?>
+    <a href="http://localhost/462Project/index.html.php">Logout</a>
 
   </body>
 </html>
