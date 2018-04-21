@@ -17,7 +17,7 @@ if(isset($_POST['request_submit'])){
   $db = new mysqli('localhost', 'root', '', '462_schedule_project');
 
 
-  $query = "INSERT INTO prerequest (Shift_ID, userName, MFName,MLName,EFName,ELName,StartDate,EndDate, Reason, Status)
+  $query = "INSERT INTO prerequest (Shift_ID, userName, MFName,MLName,EFName,ELName,StartShift,EndShift, Reason, Status)
   VALUES (?,?,?,?,?,?,?,?,?,?)";
   $stmt = $db->prepare($query);
 
@@ -70,7 +70,7 @@ if(isset($_POST['request_submit'])){
       die("Connection failed: " . mysqli_connect_error());
     }
 
-    $sql = "SELECT Shift_ID, EFName, ELName, StartDate, EndDate, Reason, Status FROM prerequest
+    $sql = "SELECT Shift_ID, EFName, ELName, StartShift, EndShift, Reason, Status FROM prerequest
     WHERE EFName = '".$fname."' AND ELName = '".$lname."'";
 
     $result = mysqli_query($conn, $sql);
@@ -83,8 +83,8 @@ if(isset($_POST['request_submit'])){
           <td> <?php echo  $row["Shift_ID"] ?> </td>
           <td> <?php echo  $row["EFName"] ?> </td>
           <td> <?php echo  $row["ELName"] ?> </td>
-          <td> <?php echo  $row["StartDate"] ?> </td>
-          <td> <?php echo  $row["EndDate"] ?> </td>
+          <td> <?php echo  $row["StartShift"] ?> </td>
+          <td> <?php echo  $row["EndShift"] ?> </td>
           <td> <?php echo  $row["Reason"] ?> </td>
           <td> <?php echo  $row["Status"] ?> </td>
         </tr>

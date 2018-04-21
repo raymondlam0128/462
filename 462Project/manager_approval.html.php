@@ -44,8 +44,8 @@
                    prerequest.Shift_ID,
                    prerequest.EFName,
                    prerequest.ELName,
-                   prerequest.StartDate,
-                   prerequest.EndDate,
+                   prerequest.StartShift,
+                   prerequest.EndShift,
                    prerequest.Reason,
                    prerequest.Status
 
@@ -57,7 +57,7 @@
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     $stmt->store_result();
-    $stmt->bind_result($ID, $shift_ID, $EFName, $ELName, $StartDate, $EndDate, $Reason, $Status);
+    $stmt->bind_result($ID, $shift_ID, $EFName, $ELName, $StartShift, $EndShift, $Reason, $Status);
 
     if($stmt->num_rows > 0){
     while($stmt->fetch()){
@@ -65,8 +65,8 @@
         echo "<td >".$shift_ID."</td>";
         echo "<td >".$EFName."</td>";
         echo "<td >".$ELName."</td>";
-        echo "<td >".$StartDate."</td>";
-        echo "<td >".$EndDate."</td>";
+        echo "<td >".$StartShift."</td>";
+        echo "<td >".$EndShift."</td>";
         echo "<td >".$Reason."</td>";
         echo "<td >".$Status."</td>";
         echo "<td><a href='Approve.php?id=".$ID."'>$buttonName1</a></td>";
