@@ -31,8 +31,8 @@ $lname =  $_SESSION['lname'];
           <th>Shift_ID</th>
           <th>First Name</th>
           <th>Last Name</th>
-          <th>Start date off</th>
-          <th>End date off</th>
+          <th>Start Shift</th>
+          <th>End Shift</th>
           <th>Reason</th>
           <th>Status</th>
         </tr>

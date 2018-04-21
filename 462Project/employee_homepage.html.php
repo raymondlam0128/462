@@ -9,8 +9,9 @@ if(isset($_POST['request_submit'])){
   $shift_ID = $_POST['Shift_ID'];
   $manager_first_name = $_POST['manager_first_name'];
   $manager_last_name = $_POST['manager_last_name'];
-  $startDate = $_POST['Start_date'];
-  $endDate = $_POST['End_date'];
+
+  $startShift = $_POST['Start_Shift'];
+  $endShift = $_POST['End_Shift'];
   $reason = $_POST['reason'];
 
   $db = new mysqli('localhost', 'root', '', '462_schedule_project');
@@ -30,8 +31,8 @@ if(isset($_POST['request_submit'])){
   $manager_last_name ,
   $fname,
   $lname,
-  $startDate ,
-  $endDate,
+  $startShift ,
+  $endShift,
   $reason,
   $Status = "Pending");
   $stmt->execute();
@@ -58,8 +59,8 @@ if(isset($_POST['request_submit'])){
         <th>Shift ID</th>
         <th>First Name</th>
         <th>Last Name</th>
-        <th>Start date off</th>
-        <th>End date off</th>
+        <th>Start Shift</th>
+        <th>End Shift</th>
         <th>Reason</th>
         <th>Status</th>
       </tr>
@@ -122,12 +123,12 @@ if(isset($_POST['request_submit'])){
             <td><input type = "text" placeholder = "Enter manager last name" name = "manager_last_name" required></td>
           </tr>
           <tr>
-            <td><label for="Start_date"><b>Start date   </b></label></td>
-            <td><input type="date" placeholder="mm/dd/yyyy" name="Start_date" required></td>
+            <td><label for = "StartShift"> <b>Start shift </b> </label></td>
+            <td><input type = "time"  name = "Start_Shift" required></td>
           </tr>
           <tr>
-            <td><label for="End_date"><b>End date   </b></label></td>
-            <td><input type="date" placeholder="mm/dd/yyyy" name="End_date" required></td>
+            <td><label for = "EndShift"> <b>End shift </b> </label></td>
+            <td><input type = "time"  name = "End_Shift" required></td>
           </tr>
           <tr>
             <td><label for="Reason"><b>Reason  </b></label></td>
